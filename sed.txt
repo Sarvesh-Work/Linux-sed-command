@@ -1,0 +1,191 @@
+*** Sed Command ***  
+
+The sed (Stream Editor) command in Linux is used for searching, finding and replacing, inserting, and deleting text in a file or input stream. It processes text line by line and performs operations based on specified patterns.  
+
+** Basic Syntax **  
+
+------> sed [OPTIONS] 'COMMAND' file  
+
+** Options Available in sed Command **  
+
+----------------------------------------------------  
+| Option    | Description                          |  
+----------------------------------------------------  
+| -e        | Execute multiple commands/expression |  
+| -i        | Edit file in place                   |  
+| -n        | Suppress automatic printing          |  
+| -f        | Use a script file                    |  
+| -r        | Use extended regex                   |  
+| -l N      | Set output line length               |  
+| -z        | Use null-terminated input            |  
+| --help    | Display help information             |  
+| --version | Show version info                    |  
+----------------------------------------------------  
+
+** Example 1 - Print the 2nd line from a file **  
+
+Command:  
+sed -n '2p' file_name  
+
+Explanation:  
+2  = Selects the 2nd line  
+p  = Prints the line  
+-n = Suppresses automatic printing, ensuring only the matched line is displayed  
+
+** Example 2 - Print a range of lines (2 to 5) **  
+
+Command:  
+sed -n '2,5p' file_name  
+
+Explanation:  
+This will print lines 2 to 5 from the file.
+
+** Example 3 - Print lines containing "IT" department users **  
+
+Command:  
+sed -n '/It/p' file_name  
+
+Explanation:  
+This will print lines from the file that contain the word "IT".
+
+** Using Multiple Expressions in sed Command **  
+
+** Example 4 - Print only the 3rd and 6th lines from a file **  
+
+Command:  
+sed -n -e '3p' -e '6p' file_name  
+
+Explanation:  
+This will print only the 3rd and 6th lines from the file.
+
+** Example 5 - Print lines containing "IT" and "HR" department users **  
+
+Command:  
+sed -n -e '/It/p' -e '/Hr/p' file_name  
+
+Explanation:  
+This will print all lines containing "IT" and "HR" from the file.
+
+** Example 6 - Print only even lines **
+
+Command:  
+sed -n '1~2p' emp.txt  
+
+Explanation:  
+Prints the even-numbered lines from the file `emp.txt`.
+
+** Example 7 - Store the expression in a file and use with -f **
+
+Command:  
+# Create a file using vi and add expressions:  
+# 1p  
+# 2p  
+# 3p  
+sed -n -f fileExpression.txt emp.txt  
+
+Explanation:  
+Store `sed` expressions in a file and use `-f` to apply them to `emp.txt`. Make sure to use `-n` to suppress automatic printing.
+
+** Example 8 - Replace a word (non-permanent) **  
+
+Command:  
+sed 's/Bob/Rob/g' emp.txt  
+
+Explanation:  
+Replaces "Bob" with "Rob" globally in `emp.txt`, but does not save the changes permanently.
+
+** Example 9 - Replace a word permanently **  
+
+Command:  
+sed -i 's/Bob/Rob/g' emp.txt  
+
+Explanation:  
+Replaces "Bob" with "Rob" globally in `emp.txt` and edits the file in place, saving the changes permanently.
+
+** Example 10 - Replace department 'IT' with 'HR' for 'Bob' **  
+
+Command:  
+sed '/Bob/ s/IT/HR/g' emp.txt  
+
+Explanation:  
+Replaces "IT" with "HR" only in lines that contain "Bob" in `emp.txt`.
+
+** Example 11 - Delete a specific line (e.g., line 2) **  
+
+Command:  
+sed '2d' emp.txt  
+
+Explanation:  
+Deletes the second line in the file `emp.txt`.
+
+** Example 12 - Delete empty lines **  
+
+Command:  
+sed '/^$/d' emp.txt  
+
+Explanation:  
+Deletes all empty lines from `emp.txt`.
+
+** Example 13 - Write lines matching 'IT' to a file (IT department users) **  
+
+Command:  
+sed '/IT/ w ITusers.txt' emp.txt  
+
+Explanation:  
+Writes all lines containing "IT" to a new file `ITusers.txt`.
+
+** Example 14 - Add new data after a particular line (after line 3) **  
+
+Command:  
+sed '3a data' emp.txt  
+
+Explanation:  
+Adds the string "data" after line 3 in `emp.txt`.
+
+** Example 15 - Change a particular line (line 4) **  
+
+Command:  
+sed '4c hello' emp.txt  
+
+Explanation:  
+Replaces the contents of line 4 with the string "hello" in `emp.txt`.
+
+** Example 16 - Insert new data at the beginning of the file (line 1) **  
+
+Command:  
+sed '1i hello' emp.txt  
+
+Explanation:  
+Inserts the string "hello" before the first line in `emp.txt`.
+
+** Example 17 - Find hidden characters in the file **  
+
+Command:  
+sed -n 'l' emp.txt  
+
+Explanation:  
+Displays the file `emp.txt` with hidden characters and line breaks shown explicitly.
+
+** Example 18 - Quit after printing the first user found in the IT department **  
+
+Command:  
+sed '/IT/ q' emp.txt  
+
+Explanation:  
+Exits after printing the first line that contains "IT" from `emp.txt`.
+
+** Example 19 - Execute a command output after a particular line (after line 2, run 'date' command) **  
+
+Command:  
+sed '2e date' emp.txt  
+
+Explanation:  
+Executes the `date` command after line 2 in `emp.txt`.
+
+** Example 20 - Print the content of the file with line numbers **  
+
+Command:  
+sed '=' emp.txt  
+
+Explanation:  
+Prints the content of `emp.txt` along with line numbers.
